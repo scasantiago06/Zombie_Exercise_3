@@ -119,7 +119,7 @@ namespace NPC                                                                   
             /*****************************************************************************************************************************Funcion "Start"*******************************************************************************************************************************/
             void Start()
             {
-                citizenStruct_C.names = (Names)Random.Range(0, 20);                                             //Inicializo la variable "randomName" con uno de los nombres en la matríz, que como vemos, es aleatorio entre 0 y 20.
+                citizenStruct_C.names = (Names)Random.Range(0, 20);                                             //Inicializo la variable "names" con uno de los nombres en la enumeración, que como vemos, es aleatorio entre 0 y 20.
                 gameObject.name = citizenStruct_C.names.ToString();                                             //El objeto que contenga este componente "Citizen" tendrá como nombre el elegido del enumerador de nombres.
                 citizenStruct_C.age = Random.Range(15, 101);                                                    //Inicializo la variable "age" con un número aleatorio entre 15 y 101.
                 gameObject.tag = "Citizen";                                                                     //Al "gameObject" que contenga este script se le dará el tag de "Citizen".
