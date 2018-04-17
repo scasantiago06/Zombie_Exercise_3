@@ -43,7 +43,6 @@ public class Hero : MonoBehaviour                                               
         heroStruct_H.cam.transform.SetParent(gameObject.transform);                                                                                     //Ahora a la variable "cam" la emparento al objeto que tenga este script, es decir al "Hero", para que a donde se mueva el objeto, también se mueva la cámara.
         gameObject.AddComponent<FPSMove>().speed = speedHero.speed_Hero;                                                                                //Al personaje le agrego el componente "FPSMove" y le digo que la variable "speed" de dicha clase será igual a "speed_Hero" que esta en la clase "S_Hero".
         heroStruct_H.cam.AddComponent<FPSAim>();                                                                                                        //A la cámara le añado el componente "FPSAim".
-        print(speedHero.speed_Hero);
     }
 }
 
