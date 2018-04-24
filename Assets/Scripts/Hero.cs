@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using NPC.Ally;                                                                                                                                         //Para utilizar la clase "Citizen" utilizo la directiva donde se encuentra esta.                         
 using NPC.Enemy;                                                                                                                                        //Para utilizar la clase "Zombie" utilizo la directiva donde se encuentra esta.
 
@@ -31,7 +32,7 @@ public class Hero : MonoBehaviour                                               
         S_Hero speedHero = new S_Hero();                                                                                                                //Instancio la clase "S_Hero".
 
         heroStruct_H.positionHero = gameObject.transform.position;                                                                                      //Accedo a la estructura "heroStruct" y luego a la variable "positionHero" y digo que será igual a la posicion del "gameObject" que contiene este script.
-
+        heroStruct_H.dialogue = FindObjectOfType<Text>(); /**/
         gameObject.name = "Hero";                                                                                                                       //Al objeto que contiene este script le doy el nombre de "Hero" para que aparezca en la jerarquía con ese nombre.
         gameObject.tag = "Player";                                                                                                                      //Al objeto que contiene este script le doy el tag de "Hero".
 
@@ -47,7 +48,7 @@ public class Hero : MonoBehaviour                                               
 }
 
 /******************************************************************************************************************************Clase "S_Hero"************************************************************************************************************************/
-public class S_Hero                                                                                                                                     //Creo una clase que no hereda de "Monobehaviour" para utilizar "Random.Range", porque si se hereda nos saldrá error.                                                                                                                             
+public class S_Hero                                                                                                                                     //Creo una clase que no hereda de "Monobehaviour".                                                                                                                             
 {
     public readonly float speed_Hero;                                                                                                                   //Creo una variable de tipo "float" y "readOnly".
 

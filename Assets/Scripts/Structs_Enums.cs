@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*********************************************************************************************Hero****************************************************************************************/
 public struct HeroStruct                                                                                //Creo la estructura para almacenar las variables del héroe.
@@ -8,6 +9,7 @@ public struct HeroStruct                                                        
     public Vector3 positionHero;                                                                        //Creo una variable de tipo "Vector3" para guardar la posición del personaje.
     public GameObject cam;                                                                              //Creo una variable de tipo "GameObejct" para próximamente guardar la cámara principal de la escena.
     public Rigidbody rb;                                                                                //Creo una variable de tipo "RigidBody".
+    public Text dialogue;
 }
 
 /********************************************************************************************Zombie**************************************************************************************/

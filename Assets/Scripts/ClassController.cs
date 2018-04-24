@@ -9,29 +9,24 @@ public class ClassController : MonoBehaviour
 {  
     int numberOfCubes;                                                                              //Creo una variable de tipo "int" que se encargará del número de cubos que se creen.                                                                
     int randomComponent;                                                                            //Creo una variable de tipo "int" que se encargará luego de, según el número, agregar un componente.
-    const int maxCubes = 25;                                                                        //Creo una variable constante de tipo "int" que será el valor máximo de cubos que se podrán crear y no se puede editar una vez comience el juego.
-    readonly int minCubes;                                                                          //Creo una variable "ReadOnly" de tipo "int" que será el valor mínimo de cubos que se podrán crear y no se puede editar a menos que sea desde un constructor.
+    const int MAXCUBES = 25;                                                                        //Creo una variable constante de tipo "int" que será el valor máximo de cubos que se podrán crear y no se puede editar una vez comience el juego.
     List<GameObject> zombies_citizens = new List<GameObject>();                                     //Creo una lista para almacenar todos los zombies y ciudadanos.
     int numberZombies;                                                                              //Creo una variable de tipo "int" que será el contador de zombies.
     int numberCitizens;                                                                             //Creo una variable de tipo "int" que será el contador de ciudadanos.
     public Text zo;                                                                                 //Creo una variable a la cual añadir el texto del zombie.
     public Text ci;                                                                                 //Creo una variable a la cual añadir el texto del ciudadano.
 
-    public ClassController()                                                                        //Creo un constructor de la clase "ClassController".
-    {
-        minCubes = 5;                                                                               //Modifico la variable minCubes y la igualo a 5, recordando que las variables "ReadOnly" solo se pueden modificar al momento de crearse o en un constructor.
-    }
-
     /************************************************************************************************************************Funcion "Start"************************************************************************************************************************/
     void Start()
     {
-        numberOfCubes = Random.Range(minCubes, maxCubes);                                           //Inicializo "numberOfCubes" a un valor aleatorio entre 10 y 21, esto definirá la cantidad de cubos que se creen, lo mínimo será 10 y el máximo 20.
+        _ClassController cl = new _ClassController();                                               //Llamo la clase que contiene el contructor necesario para cambiar la variable "ReadOnly".
+        numberOfCubes = Random.Range(cl.minCubes, MAXCUBES);                                        //Inicializo "numberOfCubes" a un valor aleatorio entre 10 y 21, esto definirá la cantidad de cubos que se creen, lo mínimo será 10 y el máximo 20.
         randomComponent = 0;                                                                        //La variable "randomComponent" se inicializa a cero.
 
         for (int i = 0; i <= numberOfCubes; i++)                                                    //Se hace el bucle con la siguiente condición: "i" = 0, hasta que sea menor a "numberOfCubes" vaya aumentando en uno.
         {
             GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);                         //Creo una variable de tipo "GameObject" llamada "go" para almacenar el cubo que se crea después del "=".
-            go.transform.position = new Vector3(Random.Range(0, 30), 0, Random.Range(0, 30)); ;     //Luego decimos que la posición de "go" será igual a una nueva posición con el "Vector3" y entre paréntesis le damos un valor a X, Y, Z. De los cuales y será cero, y los demás serán valores aleatorios entre 0 y 30.
+            go.transform.position = new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)); ; //Luego decimos que la posición de "go" será igual a una nueva posición con el "Vector3" y entre paréntesis le damos un valor a X, Y, Z. De los cuales y será cero, y los demás serán valores aleatorios entre -20 y 20.
 
             if (randomComponent == 0)                                                               //En un principio "randomComponent" es igual a 0, así que en la primera vuelta de bucle entrará a este condicional.
             {
@@ -62,5 +57,15 @@ public class ClassController : MonoBehaviour
                 ci.text = "Number of citizens: " + (numberCitizens += 1);                           //El texto de "ci" cambia por lo que esta después del igual. 
             }
         }
+    }
+}
+
+public class _ClassController                                                                       //Creo una clase que no hereda de "Monobehaviour".
+{
+    public readonly int minCubes;                                                                   //Creo una variable "ReadOnly" de tipo "int" que será el valor mínimo de cubos que se podrán crear y no se puede editar a menos que sea desde un constructor.
+
+    public _ClassController()                                                                       //Creo un constructor de la clase "_ClassController".
+    {
+        minCubes = Random.Range(5, 15);                                                             //Modifico la variable minCubes y la igualo a 5, recordando que las variables "ReadOnly" solo se pueden modificar al momento de crearse o en un constructor.
     }
 }

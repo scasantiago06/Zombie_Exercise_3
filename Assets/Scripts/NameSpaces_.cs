@@ -11,6 +11,12 @@ namespace NPC                                                                   
         public class Zombie : MonoBehaviour                                                                     //Ahora entramos a la clase "Zombie".
         {
             public ZombieStruct zombieStruct_Z;                                                                 //Creo una variable del tipo de la estructura "ZombieStruct" y la llamo igual, simplemente que en minúsculas y luego del guión bajo, la letra de la clase a la que corresponde.
+            //Vector3 direction;
+
+            //void OnDrawGizmos()
+            //{
+            //    Gizmos.DrawLine(transform.position, transform.position + direction);
+            //}
 
             /********************************************************************************************************************************Funcion "Start"********************************************************************************************************************************/
             void Start()
@@ -29,6 +35,8 @@ namespace NPC                                                                   
             /*******************************************************************************************************************************Funcion "Update"*******************************************************************************************************************************/
             void Update()
             {
+                //direction = Vector3.Normalize(GameObject.FindGameObjectWithTag("Player").transform.position - transform.position);
+
                 switch (zombieStruct_Z.zombieBehaviour)                                                         //Creamos un "switch" para comparar la variable "zombieBehaviour" que está dentro de la estructura.
                 {
                     case ZombieBehaviour.Idle:                                                                  //En caso que el comportamiento sea "Idle":
