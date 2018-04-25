@@ -6,6 +6,7 @@ using NPC.Ally;                                                                 
 using NPC.Enemy;                                                                                                                                        //Para utilizar la clase "Zombie" utilizo la directiva donde se encuentra esta.
 using NPC;                                                                                                                                              //Para utilizar la clase "Npc" utilizo la directiva donde se encuentra esta.
 
+/****************************************************************************************************************************Clase Hero*****************************************************************************************************************************/
 public class Hero : MonoBehaviour                                                                                                                       //La clase del héroe.
 {
     HeroStruct heroStruct_H;                                                                                                                            //Creo una variable de tipo "HeroStruct" que es la estructura del héroe.
@@ -58,6 +59,7 @@ public class Hero : MonoBehaviour                                               
         heroStruct_H.cam.AddComponent<FPSAim>();                                                                                                        //A la cámara le añado el componente "FPSAim".
     }
 
+    /******************************************************************************************************************Corrutina "RemoveDialogue"**********************************************************************************************************************/
     IEnumerator RemoveDialogue()                                                                                                                        //Creo la corrutina que controla el texto del diálogo para desactivar.
     {
         yield return textEnabled;                                                                                                                       //Hago que la corrutina espere dos segundos.
@@ -65,11 +67,12 @@ public class Hero : MonoBehaviour                                               
     }
 }
 
-/******************************************************************************************************************************Clase "S_Hero"************************************************************************************************************************/
+/****************************************************************************************************************************Clase "S_Hero"****************************************************************************************************************************/
 public class S_Hero                                                                                                                                     //Creo una clase que no hereda de "Monobehaviour".                                                                                                                             
 {
     public readonly float speed_Hero;                                                                                                                   //Creo una variable de tipo "float" y "readOnly".
 
+    /*********************************************************************************************************************Contructor "S_Hero"**************************************************************************************************************************/
     public S_Hero()                                                                                                                                     //Creo un constructor para poder cambiar la variable "speed_Hero".
     {
         speed_Hero = Random.Range(0.05f, 0.2f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".

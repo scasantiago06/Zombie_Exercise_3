@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using NPC.Enemy;                                                                                    //Para utilizar la clase "Zombie" utilizo la directiva donde se encuentra esta.
 using NPC.Ally;                                                                                     //Para utilizar la clase "Citizen" utilizo la directiva donde se encuentra esta.
 
+/*************************************************************************************************************************Clase ClassController**********************************************************************************************************************/
 public class ClassController : MonoBehaviour          
 {  
     int numberOfCubes;                                                                              //Creo una variable de tipo "int" que se encargará del número de cubos que se creen.                                                                
@@ -60,10 +61,12 @@ public class ClassController : MonoBehaviour
     }
 }
 
+/*******************************************************************************************************************Clase "_ClassController"*************************************************************************************************************************/
 public class _ClassController                                                                       //Creo una clase que no hereda de "Monobehaviour".
 {
     public readonly int minCubes;                                                                   //Creo una variable "ReadOnly" de tipo "int" que será el valor mínimo de cubos que se podrán crear y no se puede editar a menos que sea desde un constructor.
-
+    
+    /************************************************************************************************************Constructor _ClassController"************************************************************************************************************************/
     public _ClassController()                                                                       //Creo un constructor de la clase "_ClassController".
     {
         minCubes = Random.Range(5, 15);                                                             //Modifico la variable minCubes y la igualo a 5, recordando que las variables "ReadOnly" solo se pueden modificar al momento de crearse o en un constructor.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/****************************************************************************************************************************Clase "FPSAim"*************************************************************************************************************************************/
 public class FPSAim : MonoBehaviour                                     //La clase para controlar la cámara.
 {
     float mouseX;                                                       //Creo la variable para guardar las coordenadas del mouse en "x".
@@ -10,12 +11,14 @@ public class FPSAim : MonoBehaviour                                     //La cla
     float mx = -45;                                                     //Esta variable será utilizada para determinar el máximo al que puede llegar "x".
     float yx = 45;                                                      //Esta variable será utilizada para determinar el máximo al que puede llegar "y".
 
+    /*************************************************************************************************************************Función "Start"***********************************************************************************************************************************/
     void Start ()                                                       //La función "Start" para que se ejecute al empezar.
     {
         body = GameObject.FindGameObjectWithTag("Player");              //En la variable "body" guardo el objeto que se encuentra con "FindObjectOfType".
     }
-	
-	void Update ()                                                      //En la "Update" debo verificar constantemente la posición del mouse.
+
+    /*************************************************************************************************************************Función "Update"***********************************************************************************************************************************/
+    void Update ()                                                      //En la "Update" debo verificar constantemente la posición del mouse.
     {
         mouseX += Input.GetAxis("Mouse X");                             //En la variable "mouseX" guardo la posición en "x".
         mouseY -= Input.GetAxis("Mouse Y");                             //En la variable "mouseY" guardo la posicion en "y".
