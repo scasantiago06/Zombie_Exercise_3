@@ -15,7 +15,6 @@ public struct HeroStruct                                                        
 /********************************************************************************************Zombie**************************************************************************************/
 public struct ZombieStruct                                                                              //Creo la estructura para almacenar las variables del Zombie.
 {
-    public WaitForSeconds timeBehaviourChange;                                                          //Creo una variable de tipo "WaitForSeconds" para utilizarlo en la corrutina como el tiempo de espera.
     public int randomColor;                                                                             //Creo una variable de tipo "int" para determinar según el número, que color será asignado.
     public int randomDirection;                                                                         //Creo una variable de tipo "int" para determinar según el número que dirección tendrá el zombie.
     public int randomRotation;                                                                          //Creo una variable de tipo "int" para determinar la dirección a la que va a rotar.
