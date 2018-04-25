@@ -12,6 +12,12 @@ public struct HeroStruct                                                        
     public Text dialogue;
 }
 
+public struct NpcStruct
+{
+    public NpcBehaviour npcBehaviour;                                                                   //Creo una variable del tipo de la enumeración "NpcBehaviour" para poder interáctuar los comportamientos que irá teniendo.
+    public int age;                                                                                     //Dentro de la estructura creo una variable de tipo "age" para manejar la edad.
+}
+
 /********************************************************************************************Zombie**************************************************************************************/
 public struct ZombieStruct                                                                              //Creo la estructura para almacenar las variables del Zombie.
 {
@@ -19,11 +25,10 @@ public struct ZombieStruct                                                      
     public int randomDirection;                                                                         //Creo una variable de tipo "int" para determinar según el número que dirección tendrá el zombie.
     public int randomRotation;                                                                          //Creo una variable de tipo "int" para determinar la dirección a la que va a rotar.
     public int rotationVelocity;                                                                        //Creo una variable de tipo "int" que será la velocidad a la que rotarán los objetos con este script.
-    public ZombieBehaviour zombieBehaviour;                                                             //Creo una variable del tipo de la enumeración "ZombieBehaviour" para poder interáctuar los comportamientos que irá teniendo.
     public BodyPart bodyPart;                                                                           //Creo una variable del tipo de la enumeración "BodyPart" para poder interactuar con las partes que se irán eligiendo.
 }
 
-public enum ZombieBehaviour                                                                             //Creo la enumeración "ZombieBehaviour" y almaceno los comportamientos que tendrá.
+public enum NpcBehaviour                                                                                //Creo la enumeración "ZombieBehaviour" y almaceno los comportamientos que tendrá.
 {
     Idle, Moving, Rotating                                                                              //Creo los tres nombres para los comportamientos. Idle (Quieto), Moving (Moviendo) y Ratating (Rotando).
 }
@@ -37,7 +42,6 @@ public enum BodyPart                                                            
 public struct CitizenStruct                                                                             //Creo la estructura para almacenar las variables del ciudadano.
 {
     public string randomName;                                                                           //Dentro de la estructura creo una variable de tipo "string" para manejar los nombres aleatorios dentro de la matríz.
-    public int age;                                                                                     //Dentro de la estructura creo una variable de tipo "age" para manejar la edad.
     public Names names;                                                                                 //Dentro de la estructura creo una variable del tipo de la enumeración "Names".
 }
 
