@@ -75,6 +75,6 @@ public class S_Hero                                                             
     /*********************************************************************************************************************Contructor "S_Hero"**************************************************************************************************************************/
     public S_Hero()                                                                                                                                     //Creo un constructor para poder cambiar la variable "speed_Hero".
     {
-        speed_Hero = Random.Range(0.05f, 0.2f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
+        speed_Hero = Random.Range(0.05f, 0.5f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
     }
 }

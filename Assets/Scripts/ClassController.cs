@@ -32,16 +32,18 @@ public class ClassController : MonoBehaviour
             if (randomComponent == 0)                                                               //En un principio "randomComponent" es igual a 0, así que en la primera vuelta de bucle entrará a este condicional.
             {
                 go.AddComponent<Hero>();                                                            //Al cubo "go" que se acabó de crear se le agrega el componente llamado "Hero" que es una clase.
-                go.gameObject.AddComponent<Rigidbody>();                                            //Al cubo "go" que se acabó de crear se le agrega el componente llamado "RigidBody".
+                go.AddComponent<Rigidbody>();                                                       //Al cubo "go" que se acabó de crear se le agrega el componente llamado "RigidBody".
             }
             else if (randomComponent == 1)                                                          //Cuando el valor almacenado en "randomComponent" sea igual a 1, entrará en este condicional.
             {
                 go.AddComponent<Zombie>();                                                          //Al cubo "go" que se acabó de crear se le agrega el componente llamado "Zombie" que es una clase dentro de la directiva "NPC.Enemy".
+                go.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;     //Al cubo "go" que se acabó de crear se le agrega el componente llamado "RigidBody" y le doy verdadero a la rotación para que no se de la vuelta.
                 zombies_citizens.Add(go);                                                           //En esta línea estoy diciendo que añada a la lista "zombies_citizens" el objeto "go" que se acabó de crear.
             }
             else if (randomComponent == 2)                                                          //Cuando el valor almacenado en "randomComponent" sea igual a 2, entrará en este condicional.
             {
                 go.AddComponent<Citizen>();                                                         //Al cubo "go" que se acabó de crear se le agrega el componente llamado "Citizen" que es una clase dentro de la directiva "NPC.Ally".
+                go.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;     //Al cubo "go" que se acabó de crear se le agrega el componente llamado "RigidBody" y le doy verdadero a la rotación para que no se de la vuelta.
                 zombies_citizens.Add(go);                                                           //En esta línea estoy diciendo que añada a la lista "zombies_citizens" el objeto "go" que se acabó de crear.
             }
             randomComponent = Random.Range(1, 3);                                                   //Por último, después de verificar todos los condicionales "if" anteriores, se cambia el valor de "randomComponent" para la próxima vuelta del bucle.
