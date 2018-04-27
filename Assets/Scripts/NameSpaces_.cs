@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using NPC.Ally;
+using NPC.Enemy;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +33,7 @@ namespace NPC                                                                   
                     break;                                                                                      //Rompemos el "switch" porque no necesitamos que siga.
 
                 case NpcBehaviour.Moving:                                                                       //En caso que el comportamiento sea "Moving":
-                    transform.position += (transform.forward * 1f) * Time.deltaTime;                            //La posición será igual a un movimiento hacia "forward" positivo, es decir, hacia el frente.
+                    transform.position += (transform.forward * 5f) * Time.deltaTime;                            //La posición será igual a un movimiento hacia "forward" positivo, es decir, hacia el frente.
                     break;                                                                                      //Rompemos el "switch" externo.
 
                 case NpcBehaviour.Rotating:                                                                     //En caso que el comportamiento sea "Rotating".
@@ -45,8 +47,20 @@ namespace NPC                                                                   
                             break;                                                                              //Rompemos el "switch".
                     }
                     break;                                                                                      //Rompemos el "switch" externo.
+                case NpcBehaviour.Run:
+                    if (this is Zombie)
+                    {
+                        print("Zombie reacciona");
+                    }
+                    if(this is Citizen)
+                    {
+                        print("Ciudadano reacciona");
+                    }
+                    break;
             }
         }
+
+
         
         /*************************************************************************************************************************Corrutina "ChangeBehaviour"***********************************************************************************************************************/
         IEnumerator ChangeBehaviour()
@@ -115,7 +129,6 @@ namespace NPC                                                                   
                         break;                                                                                  //Rompemos el "switch".
                 }
             }
-
 
             /*********************************************************************************************************************Función "ZombieMessage"***************************************************************************************************************************/
             public ZombieStruct ZombieMessage()
