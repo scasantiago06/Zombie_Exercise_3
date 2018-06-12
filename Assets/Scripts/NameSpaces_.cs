@@ -30,11 +30,11 @@ namespace NPC                                                                   
             {
                 case NpcBehaviour.Idle:                                                                         //En caso que el comportamiento sea "Idle":
                     transform.position = transform.position;                                                    //La posición del este objeto será igual a la posición de este objeto, es decir, si se estaba moviendo ya no lo hará porque la posición de este será la misma en la que se encuentra.
-                    break;                                                                                      //Rompemos el "switch" porque no necesitamos que siga.
+                    goto case NpcBehaviour.Run;                                       /////                          //Rompemos el "switch" porque no necesitamos que siga.
 
                 case NpcBehaviour.Moving:                                                                       //En caso que el comportamiento sea "Moving":
                     transform.position += (transform.forward * 5f) * Time.deltaTime;                            //La posición será igual a un movimiento hacia "forward" positivo, es decir, hacia el frente.
-                    break;                                                                                      //Rompemos el "switch" externo.
+                    goto case NpcBehaviour.Run;                                       /////                                              //Rompemos el "switch" externo.
 
                 case NpcBehaviour.Rotating:                                                                     //En caso que el comportamiento sea "Rotating".
                     switch (npcStruct_N.randomRotation)                                                         //Creamos otro "switch" para comparar la variabke "randomRotation" que está dentro de la estructura.
@@ -46,7 +46,7 @@ namespace NPC                                                                   
                             transform.Rotate(0, -npcStruct_N.rotationVelocity * Time.deltaTime, 0, 0);          //La rotación será igual a un movimiento negativo en "Y", es decir, hacia la izquierda.
                             break;                                                                              //Rompemos el "switch".
                     }
-                    break;                                                                                      //Rompemos el "switch" externo.
+                    goto case NpcBehaviour.Run;                                       /////                                               //Rompemos el "switch" externo.
                 case NpcBehaviour.Run:
                     if (this is Zombie)
                     {

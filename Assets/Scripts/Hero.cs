@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections;                                               //UpWork / HackerRank
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,22 +41,22 @@ public class Hero : MonoBehaviour                                               
     /************************************************************************************************************************Funcion "Start"************************************************************************************************************************/
     void Start()
     {
-        S_Hero speedHero = new S_Hero();                                                                                                                //Instancio la clase "S_Hero".
+        S_Hero speedHero = new S_Hero();                                                                                                                    //Instancio la clase "S_Hero".
 
-        heroStruct_H.positionHero = gameObject.transform.position;                                                                                      //Accedo a la estructura "heroStruct" y luego a la variable "positionHero" y digo que será igual a la posicion del "gameObject" que contiene este script.
-        heroStruct_H.dialogue = GameObject.FindGameObjectWithTag("Dialogue").GetComponent<Text>();                                                      //A la variable de tipo texto "dialogue" que está dentro de la estructura le asigno el componente "text" del "GameObject" que tenga el tag "Dialogue".
+        heroStruct_H.positionHero = gameObject.transform.position;                                                                                          //Accedo a la estructura "heroStruct" y luego a la variable "positionHero" y digo que será igual a la posicion del "gameObject" que contiene este script.
+        heroStruct_H.dialogue = GameObject.FindGameObjectWithTag("Dialogue").GetComponent<Text>();                                                          //A la variable de tipo texto "dialogue" que está dentro de la estructura le asigno el componente "text" del "GameObject" que tenga el tag "Dialogue".
 
-        gameObject.name = "Hero";                                                                                                                       //Al objeto que contiene este script le doy el nombre de "Hero" para que aparezca en la jerarquía con ese nombre.
-        gameObject.tag = "Player";                                                                                                                      //Al objeto que contiene este script le doy el tag de "Hero".
+        gameObject.name = "Hero";                                                                                                                           //Al objeto que contiene este script le doy el nombre de "Hero" para que aparezca en la jerarquía con ese nombre.
+        gameObject.tag = "Player";                                                                                                                          //Al objeto que contiene este script le doy el tag de "Hero".
 
-        heroStruct_H.rb = GetComponent<Rigidbody>();                                                                                                    //A la variable "rb" de la estructura le doy el componente "RigidBoy".
-        gameObject.GetComponent<Renderer>().material.color = Color.black;                                                                               //Le doy un color al personaje, un simple cambio visual.
-        heroStruct_H.rb.constraints = RigidbodyConstraints.FreezeRotation;                                                                              //A la variable "rb" de la estructura le digo que acceda a los "Constraints" y ponga verdadero todo el "FreezeRotation" en el inspector.
-        heroStruct_H.cam = GameObject.FindGameObjectWithTag("MainCamera");                                                                              //A la variable "cam" de la estructura almaceno el "gameObject" que tenga el tag de "MainCamera", es decir que se guardará la cámara principal de la escena.
-        heroStruct_H.cam.transform.position = new Vector3(heroStruct_H.positionHero.x, heroStruct_H.positionHero.y + 1, heroStruct_H.positionHero.z);   //Ahora a la variable "cam" le doy una posición en la escena, la cual va a ser igual que a la del personaje o "Hero" pero se le suma 1 a "y" para que este un poco más alta y simule la cabeza.
-        heroStruct_H.cam.transform.SetParent(gameObject.transform);                                                                                     //Ahora a la variable "cam" la emparento al objeto que tenga este script, es decir al "Hero", para que a donde se mueva el objeto, también se mueva la cámara.
-        gameObject.AddComponent<FPSMove>().speed = speedHero.speed_Hero;                                                                                //Al personaje le agrego el componente "FPSMove" y le digo que la variable "speed" de dicha clase será igual a "speed_Hero" que esta en la clase "S_Hero".
-        heroStruct_H.cam.AddComponent<FPSAim>();                                                                                                        //A la cámara le añado el componente "FPSAim".
+        heroStruct_H.rb = GetComponent<Rigidbody>();                                                                                                        //A la variable "rb" de la estructura le doy el componente "RigidBoy".
+        gameObject.GetComponent<Renderer>().material.color = Color.black;                                                                                   //Le doy un color al personaje, un simple cambio visual.
+        heroStruct_H.rb.constraints = RigidbodyConstraints.FreezeRotation;                                                                                  //A la variable "rb" de la estructura le digo que acceda a los "Constraints" y ponga verdadero todo el "FreezeRotation" en el inspector.
+        heroStruct_H.cam = GameObject.FindGameObjectWithTag("MainCamera");                                                                                  //A la variable "cam" de la estructura almaceno el "gameObject" que tenga el tag de "MainCamera", es decir que se guardará la cámara principal de la escena.
+        heroStruct_H.cam.transform.position = new Vector3(heroStruct_H.positionHero.x, heroStruct_H.positionHero.y + 1, heroStruct_H.positionHero.z - 2);   //Ahora a la variable "cam" le doy una posición en la escena, la cual va a ser igual que a la del personaje o "Hero" pero se le suma 1 a "y" para que este un poco más alta y simule la cabeza.
+        heroStruct_H.cam.transform.SetParent(gameObject.transform);                                                                                         //Ahora a la variable "cam" la emparento al objeto que tenga este script, es decir al "Hero", para que a donde se mueva el objeto, también se mueva la cámara.
+        gameObject.AddComponent<FPSMove>().speed = speedHero.speed_Hero;                                                                                    //Al personaje le agrego el componente "FPSMove" y le digo que la variable "speed" de dicha clase será igual a "speed_Hero" que esta en la clase "S_Hero".
+        heroStruct_H.cam.AddComponent<FPSAim>();                                                                                                            //A la cámara le añado el componente "FPSAim".
     }
 
     /******************************************************************************************************************Corrutina "RemoveDialogue"**********************************************************************************************************************/
@@ -75,6 +75,6 @@ public class S_Hero                                                             
     /*********************************************************************************************************************Contructor "S_Hero"**************************************************************************************************************************/
     public S_Hero()                                                                                                                                     //Creo un constructor para poder cambiar la variable "speed_Hero".
     {
-        speed_Hero = Random.Range(0.05f, 0.5f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
+        speed_Hero = Random.Range(0.01f, 0.3f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
     }
 }
