@@ -20,6 +20,28 @@ namespace NPC                                                                   
         {
             npcStruct_N.age = Random.Range(15, 101);                                                            //Inicializo la variable "age" con un número aleatorio entre 15 y 101.
             npcStruct_N.rotationVelocity = Random.Range(15, 100);                                               //Inicializo la variable "rotationVelocity" que está dentro de la estructura "npcStruct_N" y va a ser igual a un número entre 15 y 99 realmente.
+            
+            if(npcStruct_N.age <= 15)
+            {
+                npcStruct_N.runSpeed = 5.0f;
+            }
+            else if (npcStruct_N.age <= 30 && npcStruct_N.age > 15)
+            {
+                npcStruct_N.runSpeed = 4.0f;
+            }
+            else if (npcStruct_N.age <= 50 && npcStruct_N.age > 30)
+            {
+                npcStruct_N.runSpeed = 3.0f;
+            }
+            else if (npcStruct_N.age <= 75 && npcStruct_N.age > 50)
+            {
+                npcStruct_N.runSpeed = 2.0f;
+            }
+            else if (npcStruct_N.age <= 100 && npcStruct_N.age > 75)
+            {
+                npcStruct_N.runSpeed = 1.0f;
+            }
+
             StartCoroutine("ChangeBehaviour");                                                                  //Iniciamos la corrutina "ChangeBehaviour".
         }
 
@@ -30,11 +52,11 @@ namespace NPC                                                                   
             {
                 case NpcBehaviour.Idle:                                                                         //En caso que el comportamiento sea "Idle":
                     transform.position = transform.position;                                                    //La posición del este objeto será igual a la posición de este objeto, es decir, si se estaba moviendo ya no lo hará porque la posición de este será la misma en la que se encuentra.
-                    goto case NpcBehaviour.Run;                                       /////                          //Rompemos el "switch" porque no necesitamos que siga.
+                    break;                                       /////                          //Rompemos el "switch" porque no necesitamos que siga.
 
                 case NpcBehaviour.Moving:                                                                       //En caso que el comportamiento sea "Moving":
-                    transform.position += (transform.forward * 5f) * Time.deltaTime;                            //La posición será igual a un movimiento hacia "forward" positivo, es decir, hacia el frente.
-                    goto case NpcBehaviour.Run;                                       /////                                              //Rompemos el "switch" externo.
+                    transform.position += (transform.forward * npcStruct_N.runSpeed) * Time.deltaTime;                            //La posición será igual a un movimiento hacia "forward" positivo, es decir, hacia el frente.
+                    break;                                       /////                                              //Rompemos el "switch" externo.
 
                 case NpcBehaviour.Rotating:                                                                     //En caso que el comportamiento sea "Rotating".
                     switch (npcStruct_N.randomRotation)                                                         //Creamos otro "switch" para comparar la variabke "randomRotation" que está dentro de la estructura.
@@ -46,22 +68,31 @@ namespace NPC                                                                   
                             transform.Rotate(0, -npcStruct_N.rotationVelocity * Time.deltaTime, 0, 0);          //La rotación será igual a un movimiento negativo en "Y", es decir, hacia la izquierda.
                             break;                                                                              //Rompemos el "switch".
                     }
-                    goto case NpcBehaviour.Run;                                       /////                                               //Rompemos el "switch" externo.
-                case NpcBehaviour.Run:
-                    if (this is Zombie)
-                    {
-                        print("Zombie reacciona");
-                    }
-                    if(this is Citizen)
-                    {
-                        print("Ciudadano reacciona");
-                    }
+                    break;                                       /////                                               //Rompemos el "switch" externo.
+                case NpcBehaviour.Runing:
+
                     break;
             }
         }
-
-
         
+        public void DistanceFunction()
+        {
+            foreach(GameObject zom in ClassController.zombieList)
+            {
+                foreach (GameObject cit in ClassController.citizenList)
+                {
+                    npcStruct_N.distances = Vector3.Distance(zom.transform.position,cit.transform.position);
+                    
+                    if (npcStruct_N.distances < 5)
+                    {
+                        //npcStruct_N.npcBehaviour = NpcBehaviour.Runing;
+                        zom.transform.position = Vector3.MoveTowards(zom.transform.position, cit.transform.position, (0.5f * Time.deltaTime));
+
+                    }
+                }
+            }
+        }
+
         /*************************************************************************************************************************Corrutina "ChangeBehaviour"***********************************************************************************************************************/
         IEnumerator ChangeBehaviour()
         {
@@ -90,17 +121,17 @@ namespace NPC                                                                   
         /*****************************************************************************************************************************Clase "Zombie"*******************************************************************************************************************************/
         public class Zombie : Npc                                                                               //Ahora entramos a la clase "Zombie" que hereda de la clase "Npc".
         {
-            
             //void OnDrawGizmos()
             //{
-            //    Gizmos.DrawLine(transform.position, transform.position + direction);
+            //    Gizmos.DrawLine(transform.position, citi.transform.position);
             //}
-            
+
             /***********************************************************************************************************************Funcion "Start"********************************************************************************************************************************/
             void Start()
             {
                 _Start();
-                gameObject.name = "Zombie";                                                                     //Al objeto que tenga este script se le dará el nombre de "Zombie".
+                Debug.Log(npcStruct_N.runSpeed);
+                gameObject.name = npcStruct_N.age.ToString();                                                                     //Al objeto que tenga este script se le dará el nombre de "Zombie".
                 gameObject.tag = "Zombie";                                                                      //Al objeto que tenga este script se le dará el tag de "Zombie".
                 zombieStruct_N.randomColor = Random.Range(0, 3);                                                //Inicializo la variable "randomColor" que está dentro de la estructura y va a ser igual a un número aleatorio entre 0 y 2 realmente.
                 zombieStruct_N.bodyPart = (BodyPart)Random.Range(0, 5);                                         //Inicializo la variable "bodyPart" que esta dentro de la estructura y va a ser igual a una parte aleatoria de la enumeración "BodyPart", es decir, primero se obtiene un número aleatorio entre 0 y 4 realmente, y como la variable no es de un tipo de número, es decir, no puede almacenar números, por lo tanto ese número que obtengamos se transfoma en una posición de la enumeración con los paréntesis (BodyPart).
@@ -109,8 +140,9 @@ namespace NPC                                                                   
 
             /***********************************************************************************************************************Funcion "Update"*******************************************************************************************************************************/
             void Update()
-            {
+            {   
                 Movement();
+                DistanceFunction();
             }
 
             /********************************************************************************************************************Funcion "ChangeColor"****************************************************************************************************************************/

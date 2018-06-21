@@ -11,12 +11,12 @@ public class ClassController : MonoBehaviour
     int numberOfCubes;                                                                              //Creo una variable de tipo "int" que se encargará del número de cubos que se creen.                                                                
     int randomComponent;                                                                            //Creo una variable de tipo "int" que se encargará luego de, según el número, agregar un componente.
     const int MAXCUBES = 25;                                                                        //Creo una variable constante de tipo "int" que será el valor máximo de cubos que se podrán crear y no se puede editar una vez comience el juego.
-    List<GameObject> zombies_citizens = new List<GameObject>();                                     //Creo una lista para almacenar todos los zombies y ciudadanos.
+    public static List<GameObject> zombieList = new List<GameObject>();                  /////                   //Creo una lista para almacenar todos los zombies y ciudadanos.
+    public static List<GameObject> citizenList = new List<GameObject>();                /////
     int numberZombies;                                                                              //Creo una variable de tipo "int" que será el contador de zombies.
     int numberCitizens;                                                                             //Creo una variable de tipo "int" que será el contador de ciudadanos.
     public Text zo;                                                                                 //Creo una variable a la cual añadir el texto del zombie.
     public Text ci;                                                                                 //Creo una variable a la cual añadir el texto del ciudadano.
-
     /************************************************************************************************************************Funcion "Start"************************************************************************************************************************/
     void Start()
     {
@@ -38,27 +38,27 @@ public class ClassController : MonoBehaviour
             {
                 go.AddComponent<Zombie>();                                                          //Al cubo "go" que se acabó de crear se le agrega el componente llamado "Zombie" que es una clase dentro de la directiva "NPC.Enemy".
                 go.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;     //Al cubo "go" que se acabó de crear se le agrega el componente llamado "RigidBody" y le doy verdadero a la rotación para que no se de la vuelta.
-                zombies_citizens.Add(go);                                                           //En esta línea estoy diciendo que añada a la lista "zombies_citizens" el objeto "go" que se acabó de crear.
+                zombieList.Add(go);                                //////                           //En esta línea estoy diciendo que añada a la lista "zombies_citizens" el objeto "go" que se acabó de crear.
             }
             else if (randomComponent == 2)                                                          //Cuando el valor almacenado en "randomComponent" sea igual a 2, entrará en este condicional.
             {
                 go.AddComponent<Citizen>();                                                         //Al cubo "go" que se acabó de crear se le agrega el componente llamado "Citizen" que es una clase dentro de la directiva "NPC.Ally".
                 go.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;     //Al cubo "go" que se acabó de crear se le agrega el componente llamado "RigidBody" y le doy verdadero a la rotación para que no se de la vuelta.
-                zombies_citizens.Add(go);                                                           //En esta línea estoy diciendo que añada a la lista "zombies_citizens" el objeto "go" que se acabó de crear.
+                citizenList.Add(go);                                                           //En esta línea estoy diciendo que añada a la lista "zombies_citizens" el objeto "go" que se acabó de crear.
             }
             randomComponent = Random.Range(1, 3);                                                   //Por último, después de verificar todos los condicionales "if" anteriores, se cambia el valor de "randomComponent" para la próxima vuelta del bucle.
         }
 
-        foreach (GameObject gos in zombies_citizens)                                                //Creo un "foreach" y entre paréntesis digo: para cada objeto "gos" (Nombre que le dí a dichos objetos) en la lista hacer:
+
+                                                                        //////
+        foreach (GameObject z in zombieList)                                                //Creo un "foreach" y entre paréntesis digo: para cada objeto "gos" (Nombre que le dí a dichos objetos) en la lista hacer:
         {
-            if (gos.GetComponent<Zombie>())                                                         //El condicional verifica si el objeto "gos" tiene el componente <Zombie>.
-            {
-                zo.text = "Number of zombies: " + (numberZombies += 1) ;                            //El texto de "zo" cambia por lo que esta después del igual.
-            }
-            if (gos.GetComponent<Citizen>())                                                        //El condicional verifica si el objeto "gos" tiene el componente <Citizen>.
-            {
-                ci.text = "Number of citizens: " + (numberCitizens += 1);                           //El texto de "ci" cambia por lo que esta después del igual. 
-            }
+            zo.text = "Number of zombies: " + (numberZombies += 1);                            //El texto de "zo" cambia por lo que esta después del igual.
+        }
+
+        foreach (GameObject c in citizenList)
+        {
+            ci.text = "Number of ciizens: " + (numberCitizens += 1);
         }
     }
 }
