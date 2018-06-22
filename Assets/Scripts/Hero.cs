@@ -42,7 +42,6 @@ public class Hero : MonoBehaviour                                               
     void Start()
     {
         S_Hero speedHero = new S_Hero();                                                                                                                    //Instancio la clase "S_Hero".
-
         heroStruct_H.positionHero = gameObject.transform.position;                                                                                          //Accedo a la estructura "heroStruct" y luego a la variable "positionHero" y digo que será igual a la posicion del "gameObject" que contiene este script.
         heroStruct_H.dialogue = GameObject.FindGameObjectWithTag("Dialogue").GetComponent<Text>();                                                          //A la variable de tipo texto "dialogue" que está dentro de la estructura le asigno el componente "text" del "GameObject" que tenga el tag "Dialogue".
 

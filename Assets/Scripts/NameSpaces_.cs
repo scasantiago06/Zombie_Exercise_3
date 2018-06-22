@@ -83,11 +83,10 @@ namespace NPC                                                                   
                 {
                     npcStruct_N.distances = Vector3.Distance(zom.transform.position,cit.transform.position);
                     
-                    if (npcStruct_N.distances < 5)
+                    if (npcStruct_N.distances < 5 && npcStruct_N.distances > 1.5f)
                     {
                         //npcStruct_N.npcBehaviour = NpcBehaviour.Runing;
-                        zom.transform.position = Vector3.MoveTowards(zom.transform.position, cit.transform.position, (0.5f * Time.deltaTime));
-
+                        zom.transform.position = Vector3.MoveTowards(zom.transform.position, cit.transform.position, 0.005f);
                     }
                 }
             }

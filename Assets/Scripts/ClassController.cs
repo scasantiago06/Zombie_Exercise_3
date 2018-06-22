@@ -27,7 +27,7 @@ public class ClassController : MonoBehaviour
         for (int i = 0; i <= numberOfCubes; i++)                                                    //Se hace el bucle con la siguiente condición: "i" = 0, hasta que sea menor a "numberOfCubes" vaya aumentando en uno.
         {
             GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);                         //Creo una variable de tipo "GameObject" llamada "go" para almacenar el cubo que se crea después del "=".
-            go.transform.position = new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)); ; //Luego decimos que la posición de "go" será igual a una nueva posición con el "Vector3" y entre paréntesis le damos un valor a X, Y, Z. De los cuales y será cero, y los demás serán valores aleatorios entre -20 y 20.
+            go.transform.position = new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)); //Luego decimos que la posición de "go" será igual a una nueva posición con el "Vector3" y entre paréntesis le damos un valor a X, Y, Z. De los cuales y será cero, y los demás serán valores aleatorios entre -20 y 20.
 
             if (randomComponent == 0)                                                               //En un principio "randomComponent" es igual a 0, así que en la primera vuelta de bucle entrará a este condicional.
             {
