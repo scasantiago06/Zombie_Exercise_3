@@ -6,8 +6,8 @@ using NPC.Enemy;                                                                
 using NPC.Ally;                                                                                     //Para utilizar la clase "Citizen" utilizo la directiva donde se encuentra esta.
 
 /*************************************************************************************************************************Clase ClassController**********************************************************************************************************************/
-public class ClassController : MonoBehaviour          
-{  
+public class ClassController : MonoBehaviour
+{
     int numberOfCubes;                                                                              //Creo una variable de tipo "int" que se encargará del número de cubos que se creen.                                                                
     int randomComponent;                                                                            //Creo una variable de tipo "int" que se encargará luego de, según el número, agregar un componente.
     const int MAXCUBES = 25;                                                                        //Creo una variable constante de tipo "int" que será el valor máximo de cubos que se podrán crear y no se puede editar una vez comience el juego.
@@ -33,6 +33,7 @@ public class ClassController : MonoBehaviour
             {
                 go.AddComponent<Hero>();                                                            //Al cubo "go" que se acabó de crear se le agrega el componente llamado "Hero" que es una clase.
                 go.AddComponent<Rigidbody>();                                                       //Al cubo "go" que se acabó de crear se le agrega el componente llamado "RigidBody".
+                citizenList.Add(go);
             }
             else if (randomComponent == 1)                                                          //Cuando el valor almacenado en "randomComponent" sea igual a 1, entrará en este condicional.
             {
@@ -50,7 +51,7 @@ public class ClassController : MonoBehaviour
         }
 
 
-                                                                        //////
+        //////
         foreach (GameObject z in zombieList)                                                //Creo un "foreach" y entre paréntesis digo: para cada objeto "gos" (Nombre que le dí a dichos objetos) en la lista hacer:
         {
             zo.text = "Number of zombies: " + (numberZombies += 1);                            //El texto de "zo" cambia por lo que esta después del igual.
@@ -67,7 +68,7 @@ public class ClassController : MonoBehaviour
 public class _ClassController                                                                       //Creo una clase que no hereda de "Monobehaviour".
 {
     public readonly int minCubes;                                                                   //Creo una variable "ReadOnly" de tipo "int" que será el valor mínimo de cubos que se podrán crear y no se puede editar a menos que sea desde un constructor.
-    
+
     /************************************************************************************************************Constructor _ClassController"************************************************************************************************************************/
     public _ClassController()                                                                       //Creo un constructor de la clase "_ClassController".
     {

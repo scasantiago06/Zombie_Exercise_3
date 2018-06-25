@@ -15,26 +15,47 @@ public class Hero : MonoBehaviour                                               
     NpcStruct npcStruct_H;                                                                                                                              //Creo una variable de tipo "NpcStruct" que es la estructura del npc.
 
     WaitForSeconds textEnabled = new WaitForSeconds(2);                                                                                                 //Creo una variable de tipo "waitForSeconds" para utilizarla en la corrutina.
-
+    bool citizenText = false;
     /******************************************************************************************************************Funcion "OnCollisionEnter"******************************************************************************************************************/
     void OnCollisionEnter(Collision collision)                                                                                                          //Utilizo la función "OnCollisionEnter" para detectar cuando hay una colisión.
     {
-        if (collision.gameObject.GetComponent<Zombie>())                                                                                                //Verifico con el condicional si el objeto que tiene este script esta chocando con algún otro que tenga el componente de "Zombie".
-        {
-            zombieStruct_H = collision.gameObject.GetComponent<Zombie>().ZombieMessage();                                                               //En resumen, "ZombieStruct_H" es igual a la función "ZombieMessage()" ubicada en la clase "Zombie" y, esta función retorna la estructura local de dicha clase, por lo tanto, "ZombieStruct_H" será igual a "ZombieStruct_Z".
-            StopCoroutine("RemoveDialogue");                                                                                                            //Detengo la corrutina, esto es para que siempre que colisione se asegure de, en caso de que este activada, la detenga para que no se acumule.
-            heroStruct_H.dialogue.enabled = true;                                                                                                       //Activo el texto para que se pueda hacer la siguiente línea.
-            heroStruct_H.dialogue.text = "ZOMBIE: Waaaarrrr i want to eat " + zombieStruct_H.bodyPart;                                                  //Ahora el texto de la variable "dialogue" de la estructura cambiará a lo que aparece entre comillas más "zombieStruct_H.bodyPart", es decir, "zombieStruct_H" se acabó de sobrescribir por "zombieStruct_Z" y luego accedimos a la variable "bodyPart" de la estructura.
-            StartCoroutine("RemoveDialogue");                                                                                                           //Llamo la corrutina que desactivará el texto.
-        }
+        //    if (collision.gameObject.GetComponent<Zombie>())                                                                                                //Verifico con el condicional si el objeto que tiene este script esta chocando con algún otro que tenga el componente de "Zombie".
+        //    {
+        //        zombieStruct_H = collision.gameObject.GetComponent<Zombie>().ZombieMessage();                                                               //En resumen, "ZombieStruct_H" es igual a la función "ZombieMessage()" ubicada en la clase "Zombie" y, esta función retorna la estructura local de dicha clase, por lo tanto, "ZombieStruct_H" será igual a "ZombieStruct_Z".
+        //        StopCoroutine("RemoveDialogue");                                                                                                            //Detengo la corrutina, esto es para que siempre que colisione se asegure de, en caso de que este activada, la detenga para que no se acumule.
+        //        heroStruct_H.dialogue.enabled = true;                                                                                                       //Activo el texto para que se pueda hacer la siguiente línea.
+        //        heroStruct_H.dialogue.text = "ZOMBIE: Waaaarrrr i want to eat " + zombieStruct_H.bodyPart;                                                  //Ahora el texto de la variable "dialogue" de la estructura cambiará a lo que aparece entre comillas más "zombieStruct_H.bodyPart", es decir, "zombieStruct_H" se acabó de sobrescribir por "zombieStruct_Z" y luego accedimos a la variable "bodyPart" de la estructura.
+        //        StartCoroutine("RemoveDialogue");                                                                                                           //Llamo la corrutina que desactivará el texto.
+        //    }
         if (collision.gameObject.GetComponent<Citizen>())                                                                                               //Verifico con el condicional si el objeto que tiene este script esta chocando con algún otro que tenga el componente de "Citizen".
         {
+            citizenText = true;
             citizenStruct_H = collision.gameObject.GetComponent<Citizen>().CitizenMessage();                                                            //En resumen, "citizenStruct_H" es igual a la función "CitizenMessage()" ubicada en la clase "Citizen" y, esta función retorna la estructura local de dicha clase, por lo tanto, "CitizenStruct_H" será igual a "CitizenStruct_C".
             npcStruct_H = collision.gameObject.GetComponent<Npc>().NpcMessage();
             StopCoroutine("RemoveDialogue");                                                                                                            //Detengo la corrutina, esto es para que siempre que colisione se asegure de, en caso de que este activada, la detenga para que no se acumule.
             heroStruct_H.dialogue.enabled = true;                                                                                                       //Activo el texto para que se pueda hacer la siguiente línea.
             heroStruct_H.dialogue.text = "CITIZEN: Hello, i am " + citizenStruct_H.names + " and i am " + npcStruct_H.age + " years old";               //Ahora el texto de la variable "dialogue" de la estructura cambiará a lo que aparece entre comillas más "CitizenStruct_H.bodyPart", es decir, "CitizenStruct_H" se acabó de sobrescribir por "CitizenStruct_Z" y luego accedimos a la variable "randomName" de la estructura, y lo mismo con "citizenStruct.age"
             StartCoroutine("RemoveDialogue");                                                                                                           //Llamo la corrutina que desactivará el texto.
+        }
+    }
+
+    private void Update()
+    {
+        foreach (GameObject zo in ClassController.zombieList)
+        {
+            npcStruct_H.distances = Vector3.Distance(gameObject.transform.position, zo.transform.position);
+
+            if (citizenText == false)
+            { 
+                if (npcStruct_H.distances <= 5)
+                {
+                    StopCoroutine("RemoveDialogue");
+                    zombieStruct_H = zo.GetComponent<Zombie>().ZombieMessage();
+                    heroStruct_H.dialogue.enabled = true;
+                    heroStruct_H.dialogue.text = "ZOMBIE: Waaaarrrr i want to eat " + zombieStruct_H.bodyPart;                                                  //Ahora el texto de la variable "dialogue" de la estructura cambiará a lo que aparece entre comillas más "zombieStruct_H.bodyPart", es decir, "zombieStruct_H" se acabó de sobrescribir por "zombieStruct_Z" y luego accedimos a la variable "bodyPart" de la estructura.
+                    StartCoroutine("RemoveDialogue");
+                }
+            }
         }
     }
 
@@ -62,6 +83,7 @@ public class Hero : MonoBehaviour                                               
     IEnumerator RemoveDialogue()                                                                                                                        //Creo la corrutina que controla el texto del diálogo para desactivar.
     {
         yield return textEnabled;                                                                                                                       //Hago que la corrutina espere dos segundos.
+        citizenText = false;
         heroStruct_H.dialogue.enabled = false;                                                                                                          //Y luego que desactive el texto.
     }
 }

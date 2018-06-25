@@ -8,7 +8,7 @@ public class FPSMove : MonoBehaviour                            //Creo la clase 
     public float speed;                                         //Creo una variable de tipo "float" que será la velocidad.
 
     /*********************************************************************************************************Función "Update"************************************************************************************************************************************/
-    void Update ()                                              //El "Update" se utiliza para comprobar la presión de botones.
+    void Update()                                              //El "Update" se utiliza para comprobar la presión de botones.
     {
         if (Input.GetKey(KeyCode.W))                            //Si se presiona la tecla "W" pasa lo siguiente.
         {

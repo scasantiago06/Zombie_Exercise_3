@@ -1,5 +1,5 @@
-﻿using NPC.Ally;
-using NPC.Enemy;
+﻿//using NPC.Ally;
+//using NPC.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,8 +20,8 @@ namespace NPC                                                                   
         {
             npcStruct_N.age = Random.Range(15, 101);                                                            //Inicializo la variable "age" con un número aleatorio entre 15 y 101.
             npcStruct_N.rotationVelocity = Random.Range(15, 100);                                               //Inicializo la variable "rotationVelocity" que está dentro de la estructura "npcStruct_N" y va a ser igual a un número entre 15 y 99 realmente.
-            
-            if(npcStruct_N.age <= 15)
+
+            if (npcStruct_N.age <= 15)
             {
                 npcStruct_N.runSpeed = 5.0f;
             }
@@ -74,18 +74,17 @@ namespace NPC                                                                   
                     break;
             }
         }
-        
+
         public void DistanceFunction()
         {
-            foreach(GameObject zom in ClassController.zombieList)
+            foreach (GameObject zom in ClassController.zombieList)
             {
                 foreach (GameObject cit in ClassController.citizenList)
                 {
-                    npcStruct_N.distances = Vector3.Distance(zom.transform.position,cit.transform.position);
-                    
+                    npcStruct_N.distances = Vector3.Distance(zom.transform.position, cit.transform.position);
+
                     if (npcStruct_N.distances < 5 && npcStruct_N.distances > 1.5f)
                     {
-                        //npcStruct_N.npcBehaviour = NpcBehaviour.Runing;
                         zom.transform.position = Vector3.MoveTowards(zom.transform.position, cit.transform.position, 0.005f);
                     }
                 }
@@ -99,7 +98,7 @@ namespace NPC                                                                   
             yield return timeBehaviourChange;                                                                   //Utilizamos la variable "timeBehaviourChange" para esperar cinco segundos.
             StartCoroutine("ChangeBehaviour");                                                                  //Por último volvemos a iniciar la corrutina.
         }
-        
+
         /*************************************************************************************************************************Funcion "ChooseBehaviour"*************************************************************************************************************************/
         void ChooseBehaviour()
         {
@@ -139,7 +138,7 @@ namespace NPC                                                                   
 
             /***********************************************************************************************************************Funcion "Update"*******************************************************************************************************************************/
             void Update()
-            {   
+            {
                 Movement();
                 DistanceFunction();
             }
@@ -183,9 +182,9 @@ namespace NPC                                                                   
                 gameObject.name = citizenStruct_N.names.ToString();                                             //El objeto que contenga este componente "Citizen" tendrá como nombre el elegido del enumerador de nombres.
                 gameObject.tag = "Citizen";                                                                     //Al "gameObject" que contenga este script se le dará el tag de "Citizen".
             }
-            
+
             /*************************************************************************************************************************Función "Update"*******************************************************************************************************************************/
-            void Update()                                                                                        
+            void Update()
             {
                 Movement();                                                                                     //Llamo la función "Movement" que se encuentra en la clase "Npc".
             }
