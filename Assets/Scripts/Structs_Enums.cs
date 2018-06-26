@@ -15,12 +15,12 @@ public struct HeroStruct                                                        
 /**********************************************************************************************Estructura del Npc*****************************************************************************************/
 public struct NpcStruct
 {
-    public NpcBehaviour npcBehaviour;                                                                   //Creo una variable del tipo de la enumeración "NpcBehaviour" para poder interáctuar los comportamientos que irá teniendo.
+    //public NpcBehaviour npcBehaviour;                                                                   //Creo una variable del tipo de la enumeración "NpcBehaviour" para poder interáctuar los comportamientos que irá teniendo.
     public int age;                                                                                     //Dentro de la estructura creo una variable de tipo "age" para manejar la edad.
     public int randomRotation;                                                                          //Creo una variable de tipo "int" para determinar la dirección a la que va a rotar.
     public int rotationVelocity;                                                                        //Creo una variable de tipo "int" que será la velocidad a la que rotarán los objetos con este script.
     public float runSpeed;                                                          /////
-    public float distances;
+    //public float distances;
 }
 
 /***********************************************************************************************Estructura del Zombie**************************************************************************************/
@@ -40,7 +40,7 @@ public struct CitizenStruct                                                     
 /************************************************************************************************Enumeración de estados**************************************************************************************/
 public enum NpcBehaviour                                                                                //Creo la enumeración "ZombieBehaviour" y almaceno los comportamientos que tendrá.
 {
-    Idle, Moving, Rotating, Runing                                               //////                          //Creo los tres nombres para los comportamientos. Idle (Quieto), Moving (Moviendo) y Ratating (Rotando).
+    Idle, Moving, Rotating, Running                                               //////                          //Creo los tres nombres para los comportamientos. Idle (Quieto), Moving (Moviendo) y Ratating (Rotando).
 }
 
 /********************************************************************************************Eumeración de partes del cuerpo*********************************************************************************/

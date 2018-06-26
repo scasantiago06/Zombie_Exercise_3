@@ -16,6 +16,7 @@ public class Hero : MonoBehaviour                                               
 
     WaitForSeconds textEnabled = new WaitForSeconds(2);                                                                                                 //Creo una variable de tipo "waitForSeconds" para utilizarla en la corrutina.
     bool citizenText = false;
+    float distancesH_Z;
     /******************************************************************************************************************Funcion "OnCollisionEnter"******************************************************************************************************************/
     void OnCollisionEnter(Collision collision)                                                                                                          //Utilizo la función "OnCollisionEnter" para detectar cuando hay una colisión.
     {
@@ -43,11 +44,11 @@ public class Hero : MonoBehaviour                                               
     {
         foreach (GameObject zo in ClassController.zombieList)
         {
-            npcStruct_H.distances = Vector3.Distance(gameObject.transform.position, zo.transform.position);
+            distancesH_Z = Vector3.Distance(gameObject.transform.position, zo.transform.position);
 
             if (citizenText == false)
             { 
-                if (npcStruct_H.distances <= 5)
+                if (distancesH_Z <= 5)
                 {
                     StopCoroutine("RemoveDialogue");
                     zombieStruct_H = zo.GetComponent<Zombie>().ZombieMessage();
@@ -96,6 +97,6 @@ public class S_Hero                                                             
     /*********************************************************************************************************************Contructor "S_Hero"**************************************************************************************************************************/
     public S_Hero()                                                                                                                                     //Creo un constructor para poder cambiar la variable "speed_Hero".
     {
-        speed_Hero = Random.Range(0.01f, 0.3f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
+        speed_Hero = Random.Range(0.07f, 0.3f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
     }
 }

@@ -1,5 +1,5 @@
-﻿//using NPC.Ally;
-//using NPC.Enemy;
+﻿using NPC.Ally;
+using NPC.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +10,13 @@ namespace NPC                                                                   
     /****************************************************************************************************************************Clase "Npc"*************************************************************************************************************************************/
     public class Npc : MonoBehaviour                                                                            //Creamos la clase "Npc" que contiene todo lo que van a tener en común el zombie y el aldeano, como por ejemplo el movimineto.
     {
+        public NpcBehaviour hola;
         public ZombieStruct zombieStruct_N;                                                                     //Creo una variable del tipo de la estructura "ZombieStruct" y la llamo igual, simplemente que en minúsculas y luego del guión bajo, la letra de la clase a la que corresponde.
         public CitizenStruct citizenStruct_N;                                                                   //Creo una variable de tipo de la estructura "CitizenStruct" para poder acceder a una copia de estructura.
         public NpcStruct npcStruct_N;                                                                           //Creo una variable de tipo de la estructura "NpcStruct" para poder acceder a una copia de ella.
         WaitForSeconds timeBehaviourChange = new WaitForSeconds(3);                                             //Inicializo la variable "timeBehaviourChage" y va a ser igual a un tiempo de espera de 3 segundos.
-
+        float distanceZ_C;
+        public bool ChangeState = true;
         /**********************************************************************************************************************Función "_Start"*********************************************************************************************************************************/
         public void _Start()                                                                                    //Creo una función que se encarga de hacer lo que se debe hacer en la funcion "Start" de Unity, para luego llamar esta función en las otras clases desde su propio "Start" para no se sobrescriba la una a la otra.
         {
@@ -48,15 +50,15 @@ namespace NPC                                                                   
         /**********************************************************************************************************************Función "Movement"*********************************************************************************************************************************/
         public void Movement()
         {
-            switch (npcStruct_N.npcBehaviour)                                                                   //Creamos un "switch" para comparar la variable "zombieBehaviour" que está dentro de la estructura.
+            switch (hola)                                                                   //Creamos un "switch" para comparar la variable "zombieBehaviour" que está dentro de la estructura.
             {
                 case NpcBehaviour.Idle:                                                                         //En caso que el comportamiento sea "Idle":
                     transform.position = transform.position;                                                    //La posición del este objeto será igual a la posición de este objeto, es decir, si se estaba moviendo ya no lo hará porque la posición de este será la misma en la que se encuentra.
-                    break;                                       /////                          //Rompemos el "switch" porque no necesitamos que siga.
+                    goto case NpcBehaviour.Running;                                       /////                          //Rompemos el "switch" porque no necesitamos que siga.
 
                 case NpcBehaviour.Moving:                                                                       //En caso que el comportamiento sea "Moving":
                     transform.position += (transform.forward * npcStruct_N.runSpeed) * Time.deltaTime;                            //La posición será igual a un movimiento hacia "forward" positivo, es decir, hacia el frente.
-                    break;                                       /////                                              //Rompemos el "switch" externo.
+                    goto case NpcBehaviour.Running;                                       /////                                              //Rompemos el "switch" externo.
 
                 case NpcBehaviour.Rotating:                                                                     //En caso que el comportamiento sea "Rotating".
                     switch (npcStruct_N.randomRotation)                                                         //Creamos otro "switch" para comparar la variabke "randomRotation" que está dentro de la estructura.
@@ -68,25 +70,34 @@ namespace NPC                                                                   
                             transform.Rotate(0, -npcStruct_N.rotationVelocity * Time.deltaTime, 0, 0);          //La rotación será igual a un movimiento negativo en "Y", es decir, hacia la izquierda.
                             break;                                                                              //Rompemos el "switch".
                     }
-                    break;                                       /////                                               //Rompemos el "switch" externo.
-                case NpcBehaviour.Runing:
+                    goto case NpcBehaviour.Running;                                       /////                                               //Rompemos el "switch" externo.
 
+                case NpcBehaviour.Running:
+                    DistanceFunction();
                     break;
             }
         }
 
-        public void DistanceFunction()
+        public virtual void DistanceFunction()
         {
             foreach (GameObject zom in ClassController.zombieList)
             {
                 foreach (GameObject cit in ClassController.citizenList)
                 {
-                    npcStruct_N.distances = Vector3.Distance(zom.transform.position, cit.transform.position);
+                    distanceZ_C = Vector3.Distance(zom.transform.position, cit.transform.position);
 
-                    if (npcStruct_N.distances < 5 && npcStruct_N.distances > 1.5f)
+                    if (distanceZ_C < 5 && distanceZ_C > 1.0f)
                     {
-                        zom.transform.position = Vector3.MoveTowards(zom.transform.position, cit.transform.position, 0.005f);
+                        if (cit.GetComponent<Citizen>() || cit.GetComponent<Hero>())
+                        {
+                            //ChangeState = false;
+                            zom.transform.position = Vector3.MoveTowards(zom.transform.position, cit.transform.position, (npcStruct_N.runSpeed * 0.10f) * Time.deltaTime);
+                        }
                     }
+                    //else
+                    //{
+                    //    //ChangeState = true;
+                    //}
                 }
             }
         }
@@ -94,16 +105,19 @@ namespace NPC                                                                   
         /*************************************************************************************************************************Corrutina "ChangeBehaviour"***********************************************************************************************************************/
         IEnumerator ChangeBehaviour()
         {
-            ChooseBehaviour();                                                                                  //Llamamos la función "ChooseBehaviour".
-            yield return timeBehaviourChange;                                                                   //Utilizamos la variable "timeBehaviourChange" para esperar cinco segundos.
-            StartCoroutine("ChangeBehaviour");                                                                  //Por último volvemos a iniciar la corrutina.
+            //if (ChangeState == true)
+            //{
+                ChooseBehaviour();                                                                                  //Llamamos la función "ChooseBehaviour".
+                yield return timeBehaviourChange;                                                                   //Utilizamos la variable "timeBehaviourChange" para esperar cinco segundos.
+                StartCoroutine("ChangeBehaviour");                                                                  //Por último volvemos a iniciar la corrutina.
+            //}
         }
 
         /*************************************************************************************************************************Funcion "ChooseBehaviour"*************************************************************************************************************************/
         void ChooseBehaviour()
         {
             npcStruct_N.randomRotation = Random.Range(0, 2);                                                    //Inicializamos la variable "randomRotation" y va a ser igual a un número aleatorio entre 0 y 1 realmente.
-            npcStruct_N.npcBehaviour = (NpcBehaviour)Random.Range(0, 3);                                        //Inicializamos la variable "zombieBehaciour" y va a ser igual a un comportamiento aleatorio. Mismo caso que cuando inicializamos la variable "bodyPart".
+            hola = (NpcBehaviour)Random.Range(0, 3);                                        //Inicializamos la variable "zombieBehaciour" y va a ser igual a un comportamiento aleatorio. Mismo caso que cuando inicializamos la variable "bodyPart".
         }
 
         /***************************************************************************************************************************Función "NpcMessage"****************************************************************************************************************************/
@@ -128,7 +142,6 @@ namespace NPC                                                                   
             void Start()
             {
                 _Start();
-                Debug.Log(npcStruct_N.runSpeed);
                 gameObject.name = npcStruct_N.age.ToString();                                                                     //Al objeto que tenga este script se le dará el nombre de "Zombie".
                 gameObject.tag = "Zombie";                                                                      //Al objeto que tenga este script se le dará el tag de "Zombie".
                 zombieStruct_N.randomColor = Random.Range(0, 3);                                                //Inicializo la variable "randomColor" que está dentro de la estructura y va a ser igual a un número aleatorio entre 0 y 2 realmente.
@@ -174,6 +187,7 @@ namespace NPC                                                                   
         /****************************************************************************************************************************Clase "Citizen"********************************************************************************************************************************/
         public class Citizen : Npc                                                                              //Esto es una clase que hereda de "Npc".
         {
+            float distanceC_Z;
             /*************************************************************************************************************************Funcion "Start"*******************************************************************************************************************************/
             void Start()
             {
@@ -187,6 +201,7 @@ namespace NPC                                                                   
             void Update()
             {
                 Movement();                                                                                     //Llamo la función "Movement" que se encuentra en la clase "Npc".
+                DistanceFunction();
             }
 
             /***********************************************************************************************************************Funcion "CitizenMessage"**************************************************************************************************************************/
@@ -194,7 +209,31 @@ namespace NPC                                                                   
             {
                 return citizenStruct_N;                                                                         //Retorno la variable local de la estructura, es decir, la variable llamada "citizenStruct_C".
             }
+
+            public override void DistanceFunction()
+            {
+                foreach (GameObject cit in ClassController.citizenList)
+                {
+                    foreach (GameObject zom in ClassController.zombieList)
+                    {
+                        distanceC_Z = Vector3.Distance(cit.transform.position, zom.transform.position);
+
+                        if (distanceC_Z < 5 && distanceC_Z > 1.0f)
+                        {
+                            if (cit.GetComponent<Citizen>() && zom.GetComponent<Zombie>())
+                            {
+                                //ChangeState = false;
+                                cit.transform.position = Vector3.MoveTowards(cit.transform.position, zom.transform.position, (npcStruct_N.runSpeed * 0.10f) * Time.deltaTime);
+                                //hola = NpcBehaviour.Running;
+                            }
+                        }
+                        //else
+                        //{
+                        //    ChangeState = true;
+                        //}
+                    }
+                }
+            }
         }
     }
 }
-//direction = Vector3.Normalize(GameObject.FindGameObjectWithTag("Player").transform.position - transform.position);
