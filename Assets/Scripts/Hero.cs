@@ -20,14 +20,6 @@ public class Hero : MonoBehaviour                                               
     /******************************************************************************************************************Funcion "OnCollisionEnter"******************************************************************************************************************/
     void OnCollisionEnter(Collision collision)                                                                                                          //Utilizo la función "OnCollisionEnter" para detectar cuando hay una colisión.
     {
-        //    if (collision.gameObject.GetComponent<Zombie>())                                                                                                //Verifico con el condicional si el objeto que tiene este script esta chocando con algún otro que tenga el componente de "Zombie".
-        //    {
-        //        zombieStruct_H = collision.gameObject.GetComponent<Zombie>().ZombieMessage();                                                               //En resumen, "ZombieStruct_H" es igual a la función "ZombieMessage()" ubicada en la clase "Zombie" y, esta función retorna la estructura local de dicha clase, por lo tanto, "ZombieStruct_H" será igual a "ZombieStruct_Z".
-        //        StopCoroutine("RemoveDialogue");                                                                                                            //Detengo la corrutina, esto es para que siempre que colisione se asegure de, en caso de que este activada, la detenga para que no se acumule.
-        //        heroStruct_H.dialogue.enabled = true;                                                                                                       //Activo el texto para que se pueda hacer la siguiente línea.
-        //        heroStruct_H.dialogue.text = "ZOMBIE: Waaaarrrr i want to eat " + zombieStruct_H.bodyPart;                                                  //Ahora el texto de la variable "dialogue" de la estructura cambiará a lo que aparece entre comillas más "zombieStruct_H.bodyPart", es decir, "zombieStruct_H" se acabó de sobrescribir por "zombieStruct_Z" y luego accedimos a la variable "bodyPart" de la estructura.
-        //        StartCoroutine("RemoveDialogue");                                                                                                           //Llamo la corrutina que desactivará el texto.
-        //    }
         if (collision.gameObject.GetComponent<Citizen>())                                                                                               //Verifico con el condicional si el objeto que tiene este script esta chocando con algún otro que tenga el componente de "Citizen".
         {
             citizenText = true;
@@ -40,7 +32,7 @@ public class Hero : MonoBehaviour                                               
         }
     }
 
-    private void Update()
+    void Update()
     {
         foreach (GameObject zo in ClassController.zombieList)
         {
@@ -97,6 +89,6 @@ public class S_Hero                                                             
     /*********************************************************************************************************************Contructor "S_Hero"**************************************************************************************************************************/
     public S_Hero()                                                                                                                                     //Creo un constructor para poder cambiar la variable "speed_Hero".
     {
-        speed_Hero = Random.Range(0.07f, 0.3f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
+        speed_Hero = Random.Range(5.0f, 10.0f);                                                                                                         //Dentro del constructor cambio la variable "speed_Hero".
     }
 }
