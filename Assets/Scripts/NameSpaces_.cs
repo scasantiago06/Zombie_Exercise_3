@@ -86,18 +86,19 @@ namespace NPC                                                                   
                 {
                     distanceZ_C = Vector3.Distance(zom.transform.position, cit.transform.position);
 
-                    if (distanceZ_C < 5 && distanceZ_C > 1.0f)
+                    if (distanceZ_C < 5 /*&& distanceZ_C > 1.0f*/)
                     {
                         if (cit.GetComponent<Citizen>() || cit.GetComponent<Hero>())
                         {
-                            //ChangeState = false;
+                            ChangeState = false;
                             zom.transform.position = Vector3.MoveTowards(zom.transform.position, cit.transform.position, (npcStruct_N.runSpeed * 0.10f) * Time.deltaTime);
+                            //hola = NpcBehaviour.Running;
                         }
                     }
-                    //else
-                    //{
-                    //    //ChangeState = true;
-                    //}
+                    else
+                    {
+                        ChangeState = true;
+                    }
                 }
             }
         }
@@ -105,12 +106,12 @@ namespace NPC                                                                   
         /*************************************************************************************************************************Corrutina "ChangeBehaviour"***********************************************************************************************************************/
         IEnumerator ChangeBehaviour()
         {
-            //if (ChangeState == true)
-            //{
+            if (ChangeState == true)
+            {
                 ChooseBehaviour();                                                                                  //Llamamos la función "ChooseBehaviour".
                 yield return timeBehaviourChange;                                                                   //Utilizamos la variable "timeBehaviourChange" para esperar cinco segundos.
                 StartCoroutine("ChangeBehaviour");                                                                  //Por último volvemos a iniciar la corrutina.
-            //}
+            }
         }
 
         /*************************************************************************************************************************Funcion "ChooseBehaviour"*************************************************************************************************************************/
@@ -218,19 +219,19 @@ namespace NPC                                                                   
                     {
                         distanceC_Z = Vector3.Distance(cit.transform.position, zom.transform.position);
 
-                        if (distanceC_Z < 5 && distanceC_Z > 1.0f)
+                        if (distanceC_Z < 5 /*&& distanceC_Z > 1.0f*/)
                         {
                             if (cit.GetComponent<Citizen>() && zom.GetComponent<Zombie>())
                             {
-                                //ChangeState = false;
-                                cit.transform.position = Vector3.MoveTowards(cit.transform.position, zom.transform.position, (npcStruct_N.runSpeed * 0.10f) * Time.deltaTime);
+                                ChangeState = false;
+                                cit.transform.position = Vector3.MoveTowards(cit.transform.position, zom.transform.position, -(npcStruct_N.runSpeed * 0.10f) * Time.deltaTime);
                                 //hola = NpcBehaviour.Running;
                             }
                         }
-                        //else
-                        //{
-                        //    ChangeState = true;
-                        //}
+                        else
+                        {
+                            ChangeState = true;
+                        }
                     }
                 }
             }
