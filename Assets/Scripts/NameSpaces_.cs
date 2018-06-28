@@ -20,25 +20,25 @@ namespace NPC                                                                   
             npcStruct_N.age = Random.Range(15, 101);                                                            //Inicializo la variable "age" con un número aleatorio entre 15 y 101.
             npcStruct_N.rotationVelocity = Random.Range(15, 100);                                               //Inicializo la variable "rotationVelocity" que está dentro de la estructura "npcStruct_N" y va a ser igual a un número entre 15 y 99 realmente.
 
-            if (npcStruct_N.age <= 15)                                                                         
+            if (npcStruct_N.age <= 15)                                                                          //Con este condicional verifico la edad para darle una velocidad, si es menor a 15...                                           
             {
-                npcStruct_N.runSpeed = 10.0f;
+                npcStruct_N.runSpeed = 10.0f;                                                                   //Su velocidad será 10.
             }
-            else if (npcStruct_N.age <= 30 && npcStruct_N.age > 15)
+            else if (npcStruct_N.age <= 30 && npcStruct_N.age > 15)                                             //Si es mayor de 15 pero menor de 30...
             {
-                npcStruct_N.runSpeed = 8.0f;
+                npcStruct_N.runSpeed = 8.0f;                                                                    //Su velocidad será 8.
             }
-            else if (npcStruct_N.age <= 50 && npcStruct_N.age > 30)
+            else if (npcStruct_N.age <= 50 && npcStruct_N.age > 30)                                             //Si es mayor de 30 pero menor de 50...
             {
-                npcStruct_N.runSpeed = 7.0f;
+                npcStruct_N.runSpeed = 7.0f;                                                                    //Su velocidad será 7.
             }
-            else if (npcStruct_N.age <= 75 && npcStruct_N.age > 50)
+            else if (npcStruct_N.age <= 75 && npcStruct_N.age > 50)                                             //Si es mayor de 50 pero menor de 75...
             {
-                npcStruct_N.runSpeed = 6.0f;
+                npcStruct_N.runSpeed = 6.0f;                                                                    //Su velocidad será 6.
             }
-            else if (npcStruct_N.age <= 100 && npcStruct_N.age > 75)
+            else if (npcStruct_N.age <= 100 && npcStruct_N.age > 75)                                            //Si es mayor de 75 pero menor de 100...
             {
-                npcStruct_N.runSpeed = 5.0f;
+                npcStruct_N.runSpeed = 5.0f;                                                                    //Su velocidad será 5.
             }
 
             StartCoroutine("ChangeBehaviour");                                                                  //Iniciamos la corrutina "ChangeBehaviour".
@@ -51,11 +51,11 @@ namespace NPC                                                                   
             {
                 case NpcBehaviour.Idle:                                                                         //En caso que el comportamiento sea "Idle":
                     transform.position = transform.position;                                                    //La posición del este objeto será igual a la posición de este objeto, es decir, si se estaba moviendo ya no lo hará porque la posición de este será la misma en la que se encuentra.
-                    goto case NpcBehaviour.Running;                                      
+                    goto case NpcBehaviour.Running;                                                             //Después de este caso, se mandará a verificar el caso "Running".                                   
 
                 case NpcBehaviour.Moving:                                                                       //En caso que el comportamiento sea "Moving":
                     transform.position += (transform.forward * npcStruct_N.runSpeed) * Time.deltaTime;          //La posición será igual a un movimiento hacia "forward" positivo, es decir, hacia el frente.
-                    goto case NpcBehaviour.Running;                                      
+                    goto case NpcBehaviour.Running;                                                             //Después de este caso, se mandará a verificar el caso "Running".                 
 
                 case NpcBehaviour.Rotating:                                                                     //En caso que el comportamiento sea "Rotating".
                     switch (npcStruct_N.randomRotation)                                                         //Creamos otro "switch" para comparar la variabke "randomRotation" que está dentro de la estructura.
@@ -67,19 +67,19 @@ namespace NPC                                                                   
                             transform.Rotate(0, -npcStruct_N.rotationVelocity * Time.deltaTime, 0, 0);          //La rotación será igual a un movimiento negativo en "Y", es decir, hacia la izquierda.
                             break;                                                                              //Rompemos el "switch".
                     }
-                    goto case NpcBehaviour.Running;                                                             
+                    goto case NpcBehaviour.Running;                                                             //Después de este caso, se mandará a verificar el caso "Running".                                                            
 
-                case NpcBehaviour.Running:
-                    DistanceFunction();
+                case NpcBehaviour.Running:                                                                      //Ya que este caso se debe estar verificando constantemente, es por eso que los anteriores siempre llegan a este.
+                    DistanceFunction();                                                                         //Llamamos la función "DistanceFunction".
                     break;
             }
         }
-
-        public virtual void DistanceFunction()
+        /**********************************************************************************************************************Función "DistanceFunction"*********************************************************************************************************************************/
+        public virtual void DistanceFunction()                                                                                                                              //La función es "Virtual" porque luego se necesita sobreescribir.
         {
-            foreach (GameObject cit in ClassController.citizenList)
+            foreach (GameObject cit in ClassController.citizenList)                                                                                                         //A esta función base accederá el zombie, por eso el foreach verifica la lista de ciudadanos, que es con la que trabajará cada zombie.
             {
-                npcStruct_N.distances = Vector3.Distance(gameObject.transform.position, cit.transform.position);
+                npcStruct_N.distances = Vector3.Distance(gameObject.transform.position, cit.transform.position);                                                            //A la variable "distance" ubicada en la estructura de "NPC" le asignamos la distancia entre el "gameObject" que entre a esta función, es decir el zombie, y el ciudadano que este en el momento de verificación del "foreach".
 
                 if (npcStruct_N.distances < 5 && npcStruct_N.distances > 1.0f)
                 {
@@ -156,9 +156,15 @@ namespace NPC                                                                   
             {
                 if (collision.gameObject.GetComponent<Citizen>())
                 {
-
+                    Citizen citizen = collision.gameObject.GetComponent<Citizen>();
+                    Zombie zombie;
+                    if (!citizen.GetComponent<Zombie>())
+                    {
+                        zombie = citizen;
+                    }
                 }
             }
+
 
             /*********************************************************************************************************************Función "ZombieMessage"***************************************************************************************************************************/
             public ZombieStruct ZombieMessage()
@@ -210,6 +216,14 @@ namespace NPC                                                                   
                         }
                     }
                 }
+            }
+
+            public static implicit operator Zombie(Citizen citizen)
+            {
+                Zombie zombie = citizen.gameObject.AddComponent<Zombie>();
+                zombie.npcStruct_N.age = citizen.npcStruct_N.age;
+                citizen.enabled = false;
+                return zombie;
             }
         }
     }
