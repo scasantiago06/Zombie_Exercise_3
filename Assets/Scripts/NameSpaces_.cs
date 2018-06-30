@@ -156,12 +156,8 @@ namespace NPC                                                                   
             {
                 if (collision.gameObject.GetComponent<Citizen>())
                 {
-                    Citizen citizen = collision.gameObject.GetComponent<Citizen>();
-                    Zombie zombie;
-                    if (!citizen.GetComponent<Zombie>())
-                    {
-                        zombie = citizen;
-                    }
+                    Citizen c = collision.gameObject.GetComponent<Citizen>();
+                    Zombie z = c;
                 }
             }
 
@@ -218,12 +214,13 @@ namespace NPC                                                                   
                 }
             }
 
-            public static implicit operator Zombie(Citizen citizen)
+            /*****************************************************************************************************************Implicit Operator************************************************************************************************************************/
+            public static implicit operator Zombie(Citizen c)
             {
-                Zombie zombie = citizen.gameObject.AddComponent<Zombie>();
-                zombie.npcStruct_N.age = citizen.npcStruct_N.age;
-                citizen.enabled = false;
-                return zombie;
+                Zombie z = c.gameObject.AddComponent<Zombie>();
+                z.npcStruct_N.age = c.npcStruct_N.age;
+                Destroy(c);
+                return z;
             }
         }
     }
